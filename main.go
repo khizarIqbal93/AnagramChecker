@@ -18,24 +18,25 @@ func Anagrams(word string, words []string) []string {
 	anagrams := []string {}
 	word1 := mapMaker(word)
 	for i := 0; i < len(words); i++ {
+		matches := 0
 		word2 := mapMaker(words[i])
-		if len(word1) == len(word2) {
+		if len(word1) == len(word2) && len(word) == len(words[i]) {
 			for key := range word1 {
-				_, inWord2 := word2[key]
-				if !inWord2 {
-					fmt.Println("key", i)
+				if strings.Contains(words[i], key) {
+					matches++
 				}
-				if word1[key] != word2[key] {
-					break
+				if matches == len(word1) {
+					anagrams = append(anagrams, words[i])
 				}
 			}
-			fmt.Println(words[i], i)
-			anagrams = append(anagrams, words[i])
 		}
+	}
+	if len(anagrams) == 0 {
+		return nil
 	}
 	return anagrams
 }
 
 func main() {
-	fmt.Println(Anagrams("abba", []string{"aabb", "abcd", "bbaa", "dada"}))
+	fmt.Println(Anagrams("racer", []string{"carer", "arcre", "carre", "racrs", "racers", "arceer", "raccer", "carrer", "cerarr"}))
 }
